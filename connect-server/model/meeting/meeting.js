@@ -1,6 +1,17 @@
-const redisClient = require("./config/redis");
+import { redisClient } from "../../config/redis";
 
-exports.saveCallId = (key, value) => {
+const getMeetingData = (key) => {
+  return new Promise((resolve, reject) => {
+    redisClient.GET(key, (err, res) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(JSON.parse(res));
+    });
+  });
+};
+
+const saveMeetingData = (key, value) => {
   return new Promise((resolve, reject) => {
     redisClient.SET(key, JSON.stringify(value), "EX", 86400, (err, res) => {
       if (err) {
@@ -11,13 +22,4 @@ exports.saveCallId = (key, value) => {
   });
 };
 
-exports.getCallId = (key) => {
-  return new Promise((resolve, reject) => {
-    redisClient.GET(key, (err, res) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(JSON.parse(res));
-    });
-  });
-};
+export { getMeetingData, saveMeetingData };
