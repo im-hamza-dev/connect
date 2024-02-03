@@ -1,9 +1,12 @@
-import express from "express";
-import { saveMeetingId, getMeetingId } from "../../controllers/meeting/meeting";
+const express = require("express");
+const {
+  saveMeetingId,
+  getMeetingId,
+} = require("../../controllers/meeting/meeting");
 
-let meetingRoutes = express.router();
+let meetingRoutes = express.Router();
 
 meetingRoutes.get("/api/meeting:id", getMeetingId);
 meetingRoutes.post("/api/meeting", saveMeetingId);
 
-export { meetingRoutes };
+module.exports = meetingRoutes;

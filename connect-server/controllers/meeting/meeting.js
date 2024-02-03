@@ -1,4 +1,7 @@
-import { getMeetingData, saveMeetingData } from "../../model/meeting";
+const {
+  getMeetingData,
+  saveMeetingData,
+} = require("../../model/meeting/meeting");
 
 const getMeetingId = async (req, res) => {
   try {
@@ -22,4 +25,4 @@ const saveMeetingId = async (req, res) => {
   }
 };
 
-export { getMeetingId, saveMeetingId };
+module.exports = { getMeetingId, saveMeetingId };

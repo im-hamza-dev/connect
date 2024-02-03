@@ -1,4 +1,4 @@
-import { redisClient } from "../../config/redis";
+const { redisClient } = require("../../config/redis");
 
 const getMeetingData = (key) => {
   return new Promise((resolve, reject) => {
@@ -22,4 +22,4 @@ const saveMeetingData = (key, value) => {
   });
 };
 
-export { getMeetingData, saveMeetingData };
+module.exports = { getMeetingData, saveMeetingData };
