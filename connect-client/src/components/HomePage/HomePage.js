@@ -39,12 +39,15 @@ const HomePage = () => {
             </div>
           </div>
           <div className="help-text">
-            <a href="">Learn more</a> about Google Meet
+            <a href="/">Learn more</a> about Google Meet
           </div>
         </div>
         <div className="right-side">
           <div className="content">
-            <img src="https://www.gstatic.com/meet/google_meet_marketing_ongoing_meeting_grid_427cbb32d746b1d0133b898b50115e96.jpg" />
+            <img
+              alt="connect"
+              src="https://www.gstatic.com/meet/google_meet_marketing_ongoing_meeting_grid_427cbb32d746b1d0133b898b50115e96.jpg"
+            />
           </div>
         </div>
       </div>

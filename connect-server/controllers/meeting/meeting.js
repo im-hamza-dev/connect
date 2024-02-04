@@ -5,9 +5,10 @@ const {
 
 const getMeetingId = async (req, res) => {
   try {
-    let { id } = req.body;
+    let { id } = req.params;
     let meetingId = await getMeetingData(id);
-    res.status.code(200).send({ meetingId });
+    console.log("GET MEEETING ID:", meetingId, id);
+    res.status(200).send({ meetingId });
   } catch (err) {
     console.log("Server Error: ", err);
     res.status(400).send(err.message);
@@ -16,8 +17,8 @@ const getMeetingId = async (req, res) => {
 
 const saveMeetingId = async (req, res) => {
   try {
-    let { id, signalStream } = req.body;
-    await saveMeetingData(id, signalStream);
+    let { id, signalData } = req.body;
+    await saveMeetingData(id, signalData);
     res.status(200).send(true);
   } catch (err) {
     console.log("Server Error: ", err);

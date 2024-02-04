@@ -7,7 +7,8 @@ import {
   SAVE_CALL_ID,
 } from "./../../utils/apiEndpoints";
 import io from "socket.io-client";
-import Peer from "simple-peer";
+// import SimplePeer from "simple-peer";
+
 import "./CallPage.scss";
 import Messenger from "./../UI/Messenger/Messenger";
 import MessageListReducer from "../../reducers/MessageListReducer";
@@ -16,6 +17,7 @@ import MeetingInfo from "../UI/MeetingInfo/MeetingInfo";
 import CallPageFooter from "../UI/CallPageFooter/CallPageFooter";
 import CallPageHeader from "../UI/CallPageHeader/CallPageHeader";
 
+const SimplePeer = window.SimplePeer;
 let peer = null;
 const socket = io.connect(BASE_URL);
 const initialState = [];
@@ -46,6 +48,7 @@ const CallPage = () => {
     }
     initWebRTC();
     socket.on("code", (data) => {
+      console.log("CHECK Code:", data, url);
       if (data.url === url) {
         peer.signal(data.code);
       }
@@ -53,13 +56,19 @@ const CallPage = () => {
   }, []);
 
   const getRecieverCode = async () => {
-    const response = await getRequest(`${BASE_URL}${GET_CALL_ID}/${id}`);
-    if (response.code) {
-      peer.signal(response.code);
+    try {
+      const response = await getRequest(`${BASE_URL}${GET_CALL_ID}/${id}`);
+      console.log("Receiver code,", response.meetingId);
+      if (response.meetingId) {
+        peer.signal(response.meetingId);
+      }
+    } catch (err) {
+      console.log("Error while receiving: ", err);
     }
   };
 
   const initWebRTC = () => {
+    console.log("init webrtc .......");
     navigator.mediaDevices
       .getUserMedia({
         video: true,
@@ -68,7 +77,7 @@ const CallPage = () => {
       .then((stream) => {
         setStreamObj(stream);
 
-        peer = new Peer({
+        peer = new SimplePeer({
           initiator: isAdmin,
           trickle: false,
           stream: stream,
@@ -79,6 +88,9 @@ const CallPage = () => {
         }
 
         peer.on("signal", async (data) => {
+          console.log("Signal....,", data);
+
+          if (data.renegotiate || data.transceiverRequest) return;
           if (isAdmin) {
             let payload = {
               id,
@@ -128,14 +140,17 @@ const CallPage = () => {
         peer.on("stream", (stream) => {
           // got remote video stream, now let's show it in a video tag
           let video = document.querySelector("video");
-
+          console.log("CHECK STREAM", stream, video);
           if ("srcObject" in video) {
             video.srcObject = stream;
           } else {
             video.src = window.URL.createObjectURL(stream); // for older browsers
           }
-
-          video.play();
+          console.log("CHECK VIDEO:", video, video.src, video.srcObject);
+          video?.play();
+        });
+        peer.on("error", (err) => {
+          console.log("peer errors:", err, err.code);
         });
       })
       .catch((err) => {
@@ -201,7 +216,12 @@ const CallPage = () => {
 
   return (
     <div className="callpage-container">
-      <video className="video-container" src="" controls></video>
+      <video
+        id="meeting-video"
+        className="video-container"
+        src=""
+        controls
+      ></video>
 
       <CallPageHeader
         isMessenger={isMessenger}

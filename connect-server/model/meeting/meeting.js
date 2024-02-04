@@ -1,6 +1,7 @@
 const { redisClient } = require("../../config/redis");
 
 const getMeetingData = (key) => {
+  console.log("GET MEEETING MODEL:", key);
   return new Promise((resolve, reject) => {
     redisClient.get(key, (err, res) => {
       if (err) {

@@ -6,7 +6,7 @@ const {
 
 let meetingRoutes = express.Router();
 
-meetingRoutes.get("/api/meeting:id", getMeetingId);
+meetingRoutes.get("/api/meeting/:id", getMeetingId);
 meetingRoutes.post("/api/meeting", saveMeetingId);
 
 module.exports = meetingRoutes;
