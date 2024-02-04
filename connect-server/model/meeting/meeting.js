@@ -2,7 +2,7 @@ const { redisClient } = require("../../config/redis");
 
 const getMeetingData = (key) => {
   return new Promise((resolve, reject) => {
-    redisClient.GET(key, (err, res) => {
+    redisClient.get(key, (err, res) => {
       if (err) {
         reject(err);
       }
@@ -13,7 +13,7 @@ const getMeetingData = (key) => {
 
 const saveMeetingData = (key, value) => {
   return new Promise((resolve, reject) => {
-    redisClient.SET(key, JSON.stringify(value), "EX", 86400, (err, res) => {
+    redisClient.set(key, JSON.stringify(value), "EX", 86400, (err, res) => {
       if (err) {
         reject(err);
       }

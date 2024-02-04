@@ -8,9 +8,10 @@ const cors = require("cors");
 const port = process.env.PORT;
 const app = express();
 const httpServer = createServer(app);
-
 app.use([
-  cors(),
+  cors({
+    origin: ["http://localhost:3000"],
+  }),
   bodyParser.json(),
   bodyParser.urlencoded({ extended: false }),
   meetingRoutes,
@@ -18,7 +19,7 @@ app.use([
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: ["http://localhost:3000"],
   },
 });
 
