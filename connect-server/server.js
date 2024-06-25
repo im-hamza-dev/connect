@@ -5,31 +5,40 @@ const { Server } = require("socket.io");
 const meetingRoutes = require("./routes/meeting/meeting");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 const app = express();
 const httpServer = createServer(app);
-app.use([
-  cors({
-    origin: ["http://localhost:3000"],
-  }),
-  bodyParser.json(),
-  bodyParser.urlencoded({ extended: false }),
-  meetingRoutes,
-]);
-
-const io = new Server(httpServer, {
-  cors: {
-    origin: ["http://localhost:3000"],
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log("Connected: ", socket.id);
-  socket.on("code", (data) => {
-    socket.broadcast.emit("code", data);
+const { redisClient } = require("./config/redis");
+const { allowedOrigins } = require("./config/allowedOrigins");
+const startServer=async()=>{
+  await redisClient.connect()
+  app.use([
+    cors({
+      origin: allowedOrigins
+    }),
+    bodyParser.json(),
+    // bodyParser.urlencoded({ extended: false }),
+    meetingRoutes,
+  ]);
+  
+  const io = new Server(httpServer, {
+    cors: {
+      origin: allowedOrigins
+    },
   });
-});
+  
+  io.on("connection", (socket) => {
+    console.log("Connected: ", socket.id);
+    socket.on("code", (data) => {
+      socket.broadcast.emit("code", data);
+    });
+  });
+  
+  httpServer.listen(port, () => {
+    console.log("SERVER LISTENING ON ", port);
+  });
+  
+}
 
-httpServer.listen(port, () => {
-  console.log("SERVER LISTENING ON ", port);
-});
+
+startServer()

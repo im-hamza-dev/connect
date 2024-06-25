@@ -1,25 +1,33 @@
 const { redisClient } = require("../../config/redis");
 
-const getMeetingData = (key) => {
+const getMeetingData = async (key) => {
   console.log("GET MEEETING MODEL:", key);
-  return new Promise((resolve, reject) => {
-    redisClient.get(key, (err, res) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(JSON.parse(res));
-    });
+
+  return new Promise(async (resolve, reject) => {
+    redisClient
+      .get(key)
+      .then((res) => {
+        resolve(JSON.parse(res));
+      })
+      .catch((err) => reject(err));
   });
 };
 
-const saveMeetingData = (key, value) => {
-  return new Promise((resolve, reject) => {
-    redisClient.set(key, JSON.stringify(value), "EX", 86400, (err, res) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(res);
-    });
+const saveMeetingData = async (key, value) => {
+  console.log("SET MEEETING MODEL:", key);
+
+  // await redisClient.connect()
+  console.log("connecting:", key);
+
+  return new Promise(async (resolve, reject) => {
+    console.log("Setting:", key);
+    try {
+      redisClient.set(key, JSON.stringify(value));
+      resolve(true);
+    } catch (err) {
+      reject(false);
+    }
+    // await redisClient.disconnect()
   });
 };
 
