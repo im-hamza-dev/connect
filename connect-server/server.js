@@ -25,6 +25,7 @@ const startServer=async()=>{
     cors: {
       origin: allowedOrigins
     },
+    allowEIO3:true
   });
   
   io.on("connection", (socket) => {
