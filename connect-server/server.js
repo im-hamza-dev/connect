@@ -22,7 +22,7 @@ const startServer=async()=>{
   
   const io = new Server(httpServer, {
     cors: {
-      origin: allowedOrigins
+      origin: '*'//allowedOrigins
     },
     allowEIO3:true
   });
