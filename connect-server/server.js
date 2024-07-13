@@ -13,13 +13,12 @@ const { allowedOrigins } = require("./config/allowedOrigins");
 const startServer=async()=>{
   await redisClient.connect()
   app.use([
-    cors({
-      origin: allowedOrigins
-    }),
+    cors(),
     bodyParser.json(),
     // bodyParser.urlencoded({ extended: false }),
     meetingRoutes,
   ]);
+  app.options("*", cors())
   
   const io = new Server(httpServer, {
     cors: {
