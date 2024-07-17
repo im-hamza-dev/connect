@@ -16,6 +16,7 @@ import Alert from "../UI/Alert/Alert";
 import MeetingInfo from "../UI/MeetingInfo/MeetingInfo";
 import CallPageFooter from "../UI/CallPageFooter/CallPageFooter";
 import CallPageHeader from "../UI/CallPageHeader/CallPageHeader";
+import { performAiIntegration } from "../../utils/aiIntegration";
 
 const SimplePeer = window.SimplePeer;
 let peer = null;
@@ -209,6 +210,7 @@ const CallPage = () => {
   };
 
   const disconnectCall = () => {
+    // performAiIntegration()
     peer.destroy();
     navigate("/");
     window.location.reload();
