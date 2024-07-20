@@ -1,9 +1,32 @@
 .callpage-container {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(to right top, #13366b, #2d254b, #2a182e, #1d0e17, #000000);
+  display: flex;
+  flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
   .video-container {
-    height: 100vh;
-    width: 100%;
-    object-fit: cover; // use "cover" to avoid distortion
+    height: 70vh;
+    width: 70%;
+    margin: 0px auto ;
+    background-color: transparent;
+    border-radius: 20px;
+    box-shadow: rgba(128, 98, 145, 0.2) 0px 8px 24px;
+    // object-fit: cover; // use "cover" to avoid distortion
+    z-index: 1;
+  }
+  .my-video-container {
+    height: 300px;
+    width: 400px;
     position: absolute;
-    z-index: -1;
+    background-color: transparent;
+    border-radius: 20px;
+    box-shadow: rgba(128, 98, 145, 0.2) 0px 8px 24px;
+    // object-fit: cover; // use "cover" to avoid distortion
+    z-index: 3;
+    right: 50px;
+    bottom: 50px
   }
 }

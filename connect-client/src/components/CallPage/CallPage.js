@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getRequest, postRequest } from "./../../utils/apiRequests";
 import {
@@ -42,11 +42,13 @@ const CallPage = () => {
   const [isMessenger, setIsMessenger] = useState(false);
   const [messageAlert, setMessageAlert] = useState({});
   const [isAudio, setIsAudio] = useState(true);
+  let myVideoRef = useRef(null)
 
   useEffect(() => {
     if (isAdmin) {
       setMeetInfoPopup(true);
     }
+    initMyVideo()
     initWebRTC();
     socket.on("code", (data) => {
       console.log("CHECK Code:", data, url);
@@ -67,7 +69,14 @@ const CallPage = () => {
       console.log("Error while receiving: ", err);
     }
   };
-
+  const initMyVideo=()=>{
+    navigator.mediaDevices.getUserMedia({
+      video:true
+    }).then(stream=>{
+      myVideoRef.current.srcObject = stream
+      myVideoRef.current.play()
+    })
+  }
   const initWebRTC = () => {
     console.log("init webrtc .......");
     navigator.mediaDevices
@@ -222,8 +231,17 @@ const CallPage = () => {
         id="meeting-video"
         className="video-container"
         src=""
-        controls
+        controls={false}
       ></video>
+
+      <video
+        id="my-meeting-video"
+        className="my-video-container"
+        
+        controls={false}
+        ref = {myVideoRef}
+      ></video>
+
 
       <CallPageHeader
         isMessenger={isMessenger}

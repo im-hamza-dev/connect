@@ -1,14 +1,19 @@
 .footer-item {
   position: absolute;
-  bottom: 0;
+  bottom: 25px;
   left: 0;
-  width: 100%;
+  width: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90px;
-  background: #ffffff;
-  z-index: 1;
+  height: 80px;
+  background: #ffffff27;
+  z-index: 2;
+  border-radius: 40px;
+  box-shadow: rgba(128, 98, 145, 0.2) 0px 8px 24px;
+  left: 42%;
+
+  transition:0.2s;
   .left-item {
     display: flex;
     align-items: center;
@@ -57,9 +62,9 @@
         cursor: pointer;
         box-shadow: 0 0 10px #ddd;
       }
-      &.red-bg{
+      &.red-bg {
         background: #d93025;
-        .icon{
+        .icon {
           color: #fff;
         }
       }
