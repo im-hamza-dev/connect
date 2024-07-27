@@ -98,14 +98,15 @@
       }
     }
     .home-my-video-container{
-      width: 500px;
-      height: 400px;
+      width: 600px;
+      height: 500px;
       border-radius: 20px;
       background-color: transparent;
       box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
       object-fit: cover; // use "cover" to avoid distortion
       z-index: 1;
-      transition:0.2s
+      transition:0.2s;
+      transform: rotate(10px)
 
     }
   

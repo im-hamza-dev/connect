@@ -42,13 +42,16 @@ const CallPage = () => {
   const [isMessenger, setIsMessenger] = useState(false);
   const [messageAlert, setMessageAlert] = useState({});
   const [isAudio, setIsAudio] = useState(true);
-  let myVideoRef = useRef(null)
+  const [isRecording, setIsRecording] = useState(false);
+  const [mediaRecorder, setMediaRecorder] = useState();
+  const [transcription, setTranscription] = useState("");
+  let myVideoRef = useRef(null);
 
   useEffect(() => {
     if (isAdmin) {
       setMeetInfoPopup(true);
     }
-    initMyVideo()
+    initMyVideo();
     initWebRTC();
     socket.on("code", (data) => {
       console.log("CHECK Code:", data, url);
@@ -69,14 +72,53 @@ const CallPage = () => {
       console.log("Error while receiving: ", err);
     }
   };
-  const initMyVideo=()=>{
-    navigator.mediaDevices.getUserMedia({
-      video:true
-    }).then(stream=>{
-      myVideoRef.current.srcObject = stream
-      myVideoRef.current.play()
-    })
-  }
+  const initMyVideo = () => {
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+      })
+      .then((stream) => {
+        myVideoRef.current.srcObject = stream;
+        myVideoRef.current.play();
+      });
+  };
+
+  const startRecording = async () => {
+    let audioChunks = [];
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    let mediaRecorder_ = new MediaRecorder(stream);
+    mediaRecorder_.ondataavailable = (event) => {
+      console.log("recording inprogress", event, audioChunks);
+      audioChunks.push(event.data);
+    };
+    console.log("recording", audioChunks);
+    mediaRecorder_.onstop = async () => {
+      console.log("recording stop", audioChunks);
+      const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+      // const audioUrl = URL.createObjectURL(audioBlob);
+      // const audio = new Audio(audioUrl);
+      // audio.play();
+      const audioFile = new File([audioBlob], "audio_recording.wav", {
+        type: "audio/wav",
+      });
+      let transcription_ = await performAiIntegration(audioFile);
+      console.log(transcription_);
+      setTranscription(transcription_);
+
+      // Save or upload the audioBlob
+      // saveAudio(audioBlob);
+    };
+    mediaRecorder_.start();
+
+    setMediaRecorder(mediaRecorder_);
+    setIsRecording(true);
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder) mediaRecorder.stop();
+    setIsRecording(false);
+  };
+
   const initWebRTC = () => {
     console.log("init webrtc .......");
     navigator.mediaDevices
@@ -220,9 +262,11 @@ const CallPage = () => {
 
   const disconnectCall = () => {
     // performAiIntegration()
+
+    stopRecording();
     peer.destroy();
-    navigate("/");
-    window.location.reload();
+    // navigate("/");
+    // window.location.reload();
   };
 
   return (
@@ -237,11 +281,12 @@ const CallPage = () => {
       <video
         id="my-meeting-video"
         className="my-video-container"
-        
         controls={false}
-        ref = {myVideoRef}
+        ref={myVideoRef}
       ></video>
-
+      <div className={`meeting-transcription ${transcription ? "show" : ""}`}>
+        {transcription}
+      </div>
 
       <CallPageHeader
         isMessenger={isMessenger}
@@ -256,6 +301,9 @@ const CallPage = () => {
         isAudio={isAudio}
         toggleAudio={toggleAudio}
         disconnectCall={disconnectCall}
+        startRecording={startRecording}
+        stopRecording={stopRecording}
+        isRecording={isRecording}
       />
 
       {isAdmin && meetInfoPopup && (

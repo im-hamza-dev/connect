@@ -13,8 +13,8 @@
     margin: 0px auto ;
     background-color: transparent;
     border-radius: 20px;
-    box-shadow: rgba(128, 98, 145, 0.2) 0px 8px 24px;
-    // object-fit: cover; // use "cover" to avoid distortion
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
+    object-fit: cover; // use "cover" to avoid distortion
     z-index: 1;
   }
   .my-video-container {
@@ -23,10 +23,28 @@
     position: absolute;
     background-color: transparent;
     border-radius: 20px;
-    box-shadow: rgba(128, 98, 145, 0.2) 0px 8px 24px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
     // object-fit: cover; // use "cover" to avoid distortion
     z-index: 3;
     right: 50px;
     bottom: 50px
+  }
+  .meeting-transcription{
+    position: absolute;
+    width: 300px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.74);
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
+    bottom: 50px;
+    left: 50px;
+    z-index: 4;
+    padding: 20px;
+    opacity: 0;
+    transition:0.2s;
+    &.show{
+      opacity: 1;
+    }
+
   }
 }

@@ -3,10 +3,9 @@ import {
   faVideo,
   faMicrophone,
   faPhone,
-  faAngleUp,
-  faClosedCaptioning,
-  faDesktop,
+  faFloppyDisk,
   faMicrophoneSlash,
+  faRecordVinyl
 } from "@fortawesome/free-solid-svg-icons";
 import "./CallPageFooter.scss";
 
@@ -17,6 +16,9 @@ const CallPageFooter = ({
   isAudio,
   toggleAudio,
   disconnectCall,
+  startRecording,
+  stopRecording,
+  isRecording
 }) => {
   return (
     <div className="footer-item">
@@ -36,6 +38,9 @@ const CallPageFooter = ({
         </div>
         <div className="icon-block">
           <FontAwesomeIcon className="icon" icon={faVideo} />
+        </div>
+        <div className="icon-block" onClick={isRecording ? stopRecording : startRecording}>
+           <FontAwesomeIcon  className="icon" style={{color: isRecording ?"#fe0b0b" : 'grey',}} icon={isRecording ? faFloppyDisk : faRecordVinyl} />
         </div>
       </div>
      
