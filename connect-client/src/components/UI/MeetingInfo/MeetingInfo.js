@@ -4,10 +4,14 @@ import {
   faTimes,
   faUser,
   faShieldAlt,
+  faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import "./MeetingInfo.scss";
+import { useState } from "react";
 
 const MeetingInfo = ({ setMeetInfoPopup, url }) => {
+  const [copied, setCopied] = useState(false);
+
   return (
     <div className="meeting-info-block">
       <div className="meeting-header">
@@ -20,29 +24,24 @@ const MeetingInfo = ({ setMeetInfoPopup, url }) => {
           }}
         />
       </div>
-      <button className="add-people-btn">
-        <FontAwesomeIcon className="icon" icon={faUser} />
-        Add Others
-      </button>
+
       <p className="info-text">
         Or share this meeting link with others you want in the meeting
       </p>
-      <div className="meet-link">
+      <div
+        className="meet-link"
+        onClick={() => {
+          setCopied(true);
+          navigator.clipboard.writeText(url);
+        }}
+      >
         <span>{url}</span>
         <FontAwesomeIcon
           className="icon"
-          icon={faCopy}
-          onClick={() => navigator.clipboard.writeText(url)}
+          style={{ color: copied ? "#21ba45" : "" }}
+          icon={copied ? faCircleCheck : faCopy}
         />
       </div>
-      <div className="permission-text">
-        <FontAwesomeIcon className="icon red" icon={faShieldAlt} />
-        <p className="small-text">
-          People who use this meeting link must get your permission before they
-          can join.
-        </p>
-      </div>
-      <p className="small-text">Joined as akshay@gmail.com</p>
     </div>
   );
 };

@@ -19,7 +19,7 @@
     position: relative;
     .alert-circle-icon {
       position: absolute;
-      background: #04796a;
+      background: #2d0c5b;
       width: 10px;
       height: 10px;
       border-radius: 50%;
@@ -28,18 +28,17 @@
       right: 20px;
     }
     &.date-block {
-      font-size: 22px;
+      font-size: 18px;
       color: #5f6368;
       min-width: 120px;
       font-weight: 400;
     }
     &.icon-block {
       .icon {
-        color: #505357;
+        color: #14090f;
         font-size: 22px;
         &.profile {
           font-size: 32px;
-          color: #04796a;
         }
       }
       &:hover {

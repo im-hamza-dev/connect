@@ -265,7 +265,7 @@ const CallPage = () => {
 
     stopRecording();
     peer.destroy();
-    // navigate("/");
+    navigate("/");
     // window.location.reload();
   };
 
@@ -285,6 +285,7 @@ const CallPage = () => {
         ref={myVideoRef}
       ></video>
       <div className={`meeting-transcription ${transcription ? "show" : ""}`}>
+        <h5>Transcription</h5>
         {transcription}
       </div>
 
@@ -304,6 +305,7 @@ const CallPage = () => {
         startRecording={startRecording}
         stopRecording={stopRecording}
         isRecording={isRecording}
+        setMeetInfoPopup={setMeetInfoPopup}
       />
 
       {isAdmin && meetInfoPopup && (

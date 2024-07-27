@@ -9,6 +9,9 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  z-index: 10;
+  border-radius: 0px 0px 0px 20px;
+  border: 0;
   .messenger-header {
     padding: 20px;
     display: flex;
@@ -27,7 +30,7 @@
   .messenger-header-tabs {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #eee;
+    // border-bottom: 1px solid #eee;
     .tab {
       display: flex;
       align-items: center;
@@ -38,8 +41,8 @@
         margin-left: 10px;
       }
       &.active {
-        border-bottom: 2px solid #04796a;
-        color: #04796a;
+        border-bottom: 0.5px solid #14090f85;
+        color: #14090f;
       }
       &:hover {
         cursor: pointer;
@@ -72,7 +75,7 @@
   .send-msg-section {
     padding: 20px;
     border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    // border-bottom: 1px solid #eee;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -87,7 +90,7 @@
     .icon {
       cursor: pointer;
       &:hover {
-        color: #04796a;
+        color: #14090f;
       }
     }
   }

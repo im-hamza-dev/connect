@@ -28,9 +28,9 @@ const CallPageHeader = ({
 
   return (
     <div className="frame-header">
-      <div className="header-items icon-block">
+      {/* <div className="header-items icon-block">
         <FontAwesomeIcon className="icon" icon={faUserFriends} />
-      </div>
+      </div> */}
       <div
         className="header-items icon-block"
         onClick={() => {

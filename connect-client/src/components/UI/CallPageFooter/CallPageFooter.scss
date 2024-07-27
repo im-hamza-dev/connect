@@ -13,89 +13,48 @@
   box-shadow: rgba(128, 98, 145, 0.2) 0px 8px 24px;
   left: 42%;
 
-  transition:0.2s;
-  .left-item {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    width: 350px;
-    .icon-block {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      padding: 0 20px;
-      .icon {
-        margin-left: 10px;
-        font-size: 20px;
-      }
-      &:hover {
-        cursor: pointer;
-        background: #eee;
-      }
-    }
+  transition: 0.2s;
+}
+
+.center-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  &.left-column {
+    flex-direction: column;
+    gap: 20px;
+    position: absolute;
+    left: 50px;
+    bottom: 50px;
+    width: 60px;
   }
-  .center-item {
-    width: 100%;
+  .icon-block {
+    background: #fff;
+    border: 1px solid rgb(223, 223, 223);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
-    .icon-block {
-      background: #fff;
-      border: 1px solid rgb(223, 223, 223);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 10px;
-      .icon {
-        color: #555;
-        font-size: 20px;
-        &.red {
-          color: #d93025;
-        }
-      }
-      &:hover {
-        cursor: pointer;
-        box-shadow: 0 0 10px #ddd;
-      }
-      &.red-bg {
-        background: #d93025;
-        .icon {
-          color: #fff;
-        }
+    margin: 0 10px;
+    .icon {
+      color: #555;
+      font-size: 20px;
+      &.red {
+        color: #d93025;
       }
     }
-  }
-  .right-item {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    height: 100%;
-    width: 350px;
-    .icon-block {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      height: 100%;
-      width: 146px;
-      color: #555;
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 0 10px #ddd;
+    }
+    &.red-bg {
+      background: #d93025;
       .icon {
-        font-size: 20px;
-        margin-bottom: 10px;
-      }
-      .title {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 500;
-      }
-      &:hover {
-        cursor: pointer;
-        background: #eee;
+        color: #fff;
       }
     }
   }
